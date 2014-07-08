@@ -71,7 +71,8 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 	Image exit; // 종료 이미지
 	Image gameover; // 게임 종료 이미지
 	Image cv; // 로고 및 버전 소개
-	Image outstanding, excellent, best, good, soso, bad; // 점수 평가b
+	Image outstanding, excellent, best, good, soso, bad; // 점수 평가
+	Image shield; // 쉴드 아이템 이미지
 
 	private volatile boolean terminated = false;
 	boolean KeyUp = false; // 키보드 입력 처리를 위한 변수
@@ -115,6 +116,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		soso = Toolkit.getDefaultToolkit().getImage("img/soso.png");
 		bad = Toolkit.getDefaultToolkit().getImage("img/bad.png");
 		gameover = Toolkit.getDefaultToolkit().getImage("img/gameover.png");
+		shield = Toolkit.getDefaultToolkit().getImage("img/shield.png");
 		
 		setVisible(true); // 프레임 보이게 만들기
 		setResizable(false); // 프레임 크기 임의조절 차단
@@ -314,6 +316,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			for (int i = 0; i < lasBB / 2; i++) {
 			if(sheldItem==true && x == lx[i] || y == ly2[i]){
 				sheldItem=false;
+				break;
 			}
 				else if (x == lx[i] || y == ly2[i]) {
 					keyP = 2;
@@ -354,6 +357,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 						
 						if(sheldItem==true && x == (bobx[g] + block * ab) && y == (boby[g] + block * ac)){
 							sheldItem=false;
+							break;
 						}
 						else if (x == (bobx[g] + block * ab) && y == (boby[g] + block * ac)) {
 							keyP = 2;
@@ -378,7 +382,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 	void itemDraw(){
 		for (int z = 0; z < itemg; z++) {
 			buffg.setColor(Color.orange);
-			buffg.fillRect(itemx[z], itemy[z], block, block);
+			buffg.drawImage(shield, itemx[z], itemy[z], this);
 			if(itemx[z]==x && itemy[z]==y){
 				sheldItem=true;
 			}
@@ -562,6 +566,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		lux_over = 0;
 		x = 274;
 		y = 236;
+		sheldItem = false;
 		setBackground(Color.white);
 		System.out.println("초기화");
 	}
