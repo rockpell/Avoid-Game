@@ -31,6 +31,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 	int db_over = 0; // 중복확인
 	int sound_over = 0; // 소리 중복확인
 	int lux_over = 0;
+	int waveCheck =0; // 웨이브 체크
 	
 	int mx=0, my=0; // 마우스 좌표
 	
@@ -52,6 +53,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 	int bombbt = 0; // 폭탄 생성 변수
 	int qw = block/2; // 레이저 가이드 라인 늘리는 변수
 	int itemg = 1; // 아이템 갯수
+	int shieldItem =0; // 0: 아무것도 없음, 1:한 웨이브동안 무적상태, 2:쉴드가 존재
 	
 	public static String playerName = null; // 사용자 이름
 	
@@ -89,7 +91,6 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 	boolean gameHelp = false; // 도움말 관련 변수
 	boolean soundSwitch = false;
 	boolean laserPDtime = true; // 레이저 예측 그리는 타이밍
-	boolean sheldItem = false; // 실드 아이템
 	
 	Body() {
 		setSize(a, b); // 프레임 크기 지정
@@ -314,11 +315,11 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			}
 			
 			for (int i = 0; i < lasBB / 2; i++) {
-			if(sheldItem==true && x == lx[i] || y == ly2[i]){
-				sheldItem=false;
+			if(shieldItem==2 && x == lx[i] || y == ly2[i]){
+				shieldItem=1;
 				break;
 			}
-				else if (x == lx[i] || y == ly2[i]) {
+				else if (shieldItem !=1 && x == lx[i] || y == ly2[i]) {
 					keyP = 2;
 					break;
 				}
@@ -355,11 +356,11 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 				for (int ab = -1; ab < 2; ab++) {
 					for (int ac = -1; ac < 2; ac++) {
 						
-						if(sheldItem==true && x == (bobx[g] + block * ab) && y == (boby[g] + block * ac)){
-							sheldItem=false;
+						if(shieldItem==2 && x == (bobx[g] + block * ab) && y == (boby[g] + block * ac)){
+							shieldItem=1;
 							break;
 						}
-						else if (x == (bobx[g] + block * ab) && y == (boby[g] + block * ac)) {
+						else if (shieldItem !=1 && x == (bobx[g] + block * ab) && y == (boby[g] + block * ac)) {
 							keyP = 2;
 							break;
 						}
@@ -384,7 +385,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			buffg.setColor(Color.orange);
 			buffg.drawImage(shield, itemx[z], itemy[z], this);
 			if(itemx[z]==x && itemy[z]==y){
-				sheldItem=true;
+				shieldItem=2;
 			}
 		}
 	}
@@ -407,7 +408,8 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		}
 
 		buffg.drawString("time : " + c, a-70, 40); // 게임진행상황
-		buffg.drawString("sheldItem : "+sheldItem, a-200, 40);
+		buffg.drawString("shieldItem : "+shieldItem, a-200, 40);
+		buffg.drawString("wave : "+waveCheck, a-300, 40);
 
 		if (c % (lasert*3) == 0 && lasBB < 10) {
 			lasBB += 2;
@@ -422,7 +424,9 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			LaserProcess(lasBB); // 레이저 예측지점 생성
 			laserbt = c; // / 레이저 예측지점과 레이저 생성시간의 간격을 맞출때 쓰는 변수
 			qw = block/2;
-			if(sheldItem==false)itemProcess();
+			if(shieldItem==0)itemProcess();
+			waveCheck++;
+			if(shieldItem==1)shieldItem=0;
 		}
 
 		if (c % lasert == 0) {
@@ -440,7 +444,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			if(c%lasert < lasert-10 ){ // 레이저 그리기 시간 제한
 			bombBdraw(bombs);
 			LaserDraw(lasBB);
-			if(sheldItem==false)itemDraw();
+			if(shieldItem==0)itemDraw();
 			}
 		}
 		buffg.drawImage(player, x, y, this); // 플레이어 이미지 출력
@@ -486,13 +490,15 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		buffg.drawString("SCORE : " + score, 300, 210);
 		
 		buffg.setColor(Color.white);
-		buffg.setFont(new Font("Noteworthy", Font.PLAIN, 40));
-		buffg.drawString("Retry?", 370, 400);
-		buffg.drawString("Press Shift Key", 300, 470);
+		buffg.setFont(new Font("Noteworthy", Font.PLAIN, 30));
+		buffg.drawString("Retry?", 80, 440);
+		buffg.drawString("Press Enter Key", 300, 440);
+		buffg.drawString("Main Menu?",80, 480);
+		buffg.drawString("Press Shift Key", 300, 480);
 		
 		if(score>500) {
 			
-			buffg.drawImage(outstanding, 20, 160, this);
+			buffg.drawImage(outstanding, 20, 150, this);
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 35));
 			buffg.setColor(Color.yellow);
@@ -500,7 +506,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		}
 		else if(score>400) {
 			
-			buffg.drawImage(excellent, 20, 160, this);
+			buffg.drawImage(excellent, 20, 150, this);
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 40));
 			buffg.setColor(Color.yellow);
@@ -508,7 +514,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		}
 		else if(score>300) {
 			
-			buffg.drawImage(best, 20, 160, this);
+			buffg.drawImage(best, 20, 150, this);
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 60));
 			buffg.setColor(Color.yellow);
@@ -516,7 +522,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		}
 		else if(score>200) {
 			
-			buffg.drawImage(good, 20, 160, this);
+			buffg.drawImage(good, 20, 150, this);
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 60));
 			buffg.setColor(Color.yellow);
@@ -524,7 +530,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		}
 		else if(score>100) {
 			
-			buffg.drawImage(bad, 20, 160, this);
+			buffg.drawImage(bad, 20, 150, this);
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 60));
 			buffg.setColor(Color.yellow);
@@ -532,7 +538,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		}
 		else if(score>0) {
 			
-			buffg.drawImage(bad, 20, 160, this);
+			buffg.drawImage(bad, 20, 150, this);
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 60));
 			buffg.setColor(Color.yellow);
@@ -566,7 +572,8 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		lux_over = 0;
 		x = 274;
 		y = 236;
-		sheldItem = false;
+		waveCheck=0;
+		shieldItem = 0;
 		setBackground(Color.white);
 		System.out.println("초기화");
 	}
@@ -657,7 +664,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 
 	public void KeyProcess() { // 플레이어 이동 메소드
 
-		if (KeyUp == true && y > 56)
+		if (KeyUp == true && y > 56+block)
 			y -= block;
 		if (KeyDown == true && y < (b - 2 * block))
 			y += block;
