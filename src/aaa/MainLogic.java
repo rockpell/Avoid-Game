@@ -91,6 +91,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 	boolean gameHelp = false; // 도움말 관련 변수
 	boolean soundSwitch = false;
 	boolean laserPDtime = true; // 레이저 예측 그리는 타이밍
+	boolean laserDrawCheck =false;
 	
 	Body() {
 		setSize(a, b); // 프레임 크기 지정
@@ -269,7 +270,6 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			buffg.drawImage(cannon, lx[z], ly[z], this);
 			buffg.drawImage(cannon, lx2[z], ly2[z], this);
 		}
-		LaserBDraw(lasBB);
 	}
 
 	void LaserPDraw(int lasBB) { // 레이저 가이드라인
@@ -296,7 +296,6 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 
 	void LaserBDraw(int lasBB) { // 레이저 그리는 메서드
 		if ((c - laserbt) > 10) {
-			
 			laserPDtime = false; // 레이저 예측 체크
 			
 			buffg.setColor(Color.yellow);
@@ -444,6 +443,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			if(c%lasert < lasert-10 ){ // 레이저 그리기 시간 제한
 			bombBdraw(bombs);
 			LaserDraw(lasBB);
+			LaserBDraw(lasBB);
 			if(shieldItem==0)itemDraw();
 			}
 		}
