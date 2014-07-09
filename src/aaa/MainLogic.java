@@ -160,17 +160,17 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 				my=0;
 			}
 			
-			else if(mx>230 && mx<358 && my>180 && my<285){ // 마우스 랭킹
+			/*else if(mx>230 && mx<358 && my>180 && my<285){ // 마우스 랭킹
 				ranking = true;
 				mx=0;
 				my=0;
-			}
+			}*/
 			
-			else if(mx>150 && mx<278 && my>310 && my<415){
+			/*else if(mx>150 && mx<278 && my>310 && my<415){ // 게임 세팅
 				gameSetting = true;
 				mx=0;
 				my=0;
-			}
+			}*/
 			
 			else if(mx>380 && mx<510 && my>185 && my<310){
 				gameHelp = true;
@@ -314,14 +314,14 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			}
 			
 			for (int i = 0; i < lasBB / 2; i++) {
-			if(shieldItem==2 && x == lx[i] || y == ly2[i]){
+			if(shieldItem==2 && (x == lx[i] || y == ly2[i])){
 				shieldItem=1;
 				break;
 			}
-				else if (shieldItem !=1 && x == lx[i] || y == ly2[i]) {
+				else if (shieldItem !=1 && (x == lx[i] || y == ly2[i])) {
 					keyP = 2;
 					break;
-				}
+				} 
 			}
 		}
 	}
@@ -458,13 +458,13 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		// 상단 메뉴
 		start = Toolkit.getDefaultToolkit().getImage("img/play.png");
 		buffg.drawImage(start, 90, 180, this);
-		rank = Toolkit.getDefaultToolkit().getImage("img/rank.png");
-		buffg.drawImage(rank, 230, 180, this);
+		//rank = Toolkit.getDefaultToolkit().getImage("img/rank.png");
+		//buffg.drawImage(rank, 230, 180, this);
 		help = Toolkit.getDefaultToolkit().getImage("img/help.png");
 		buffg.drawImage(help, 380, 180, this);
 		// 하단 메뉴
-		setting = Toolkit.getDefaultToolkit().getImage("img/setting.png");
-		buffg.drawImage(setting, 150, 310, this);
+		//setting = Toolkit.getDefaultToolkit().getImage("img/setting.png");
+		//buffg.drawImage(setting, 150, 310, this);
 		exit = Toolkit.getDefaultToolkit().getImage("img/exit.png");
 		buffg.drawImage(exit, 320, 310, this);
 		
