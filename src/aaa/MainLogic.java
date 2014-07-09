@@ -154,7 +154,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		
 		if (keyP == 0){
 			
-			if(mx>90 && mx<218 && my>180 && my<285){ // 마우스 게임 시작
+			if(mx>90 && mx<218 && my>250 && my<370){ // 마우스 게임 시작
 				keyP=1;
 				mx=0; // 마우스 좌표 초기화
 				my=0;
@@ -172,13 +172,13 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 				my=0;
 			}*/
 			
-			else if(mx>380 && mx<510 && my>185 && my<310){
+			else if(mx>250 && mx<360 && my>250 && my<355){
 				gameHelp = true;
 				mx=0;
 				my=0;
 			}
 			
-			else if(mx>320 && mx<438 && my>310 && my<415){ // 마우스 게임 종료
+			else if(mx>370 && mx<498 && my>250 && my<355){ // 마우스 게임 종료
 				System.exit(0);
 			}
 			
@@ -453,20 +453,20 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 	void TrueDraw2() { // 게임 시작 전 관련 메소드
 		setBackground(Color.white);
 		title = Toolkit.getDefaultToolkit().getImage("img/title.png");
-		buffg.drawImage(title, 0, 30, this);
+		buffg.drawImage(title, 10, 30, this);
 		
 		// 상단 메뉴
 		start = Toolkit.getDefaultToolkit().getImage("img/play.png");
-		buffg.drawImage(start, 90, 180, this);
+		buffg.drawImage(start, 80, 250, this);
 		//rank = Toolkit.getDefaultToolkit().getImage("img/rank.png");
 		//buffg.drawImage(rank, 230, 180, this);
 		help = Toolkit.getDefaultToolkit().getImage("img/help.png");
-		buffg.drawImage(help, 380, 180, this);
+		buffg.drawImage(help, 230, 250, this);
 		// 하단 메뉴
 		//setting = Toolkit.getDefaultToolkit().getImage("img/setting.png");
 		//buffg.drawImage(setting, 150, 310, this);
 		exit = Toolkit.getDefaultToolkit().getImage("img/exit.png");
-		buffg.drawImage(exit, 320, 310, this);
+		buffg.drawImage(exit, 380, 250, this);
 		
 		buffg.drawString("Avoid 1.0", 15, 500);
 	}
@@ -488,6 +488,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		buffg.setColor(Color.white);
 		buffg.setFont(new Font("Noteworthy", Font.BOLD, 40));
 		buffg.drawString("SCORE : " + score, 300, 210);
+		buffg.drawString("Wave : "+waveCheck, 305, 270);
 		
 		buffg.setColor(Color.white);
 		buffg.setFont(new Font("Noteworthy", Font.PLAIN, 30));
@@ -502,7 +503,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 35));
 			buffg.setColor(Color.yellow);
-			buffg.drawString("OUTSTANDING", 300, 300);
+			buffg.drawString("OUTSTANDING", 300, 350);
 		}
 		else if(score>400) {
 			
@@ -510,7 +511,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 40));
 			buffg.setColor(Color.yellow);
-			buffg.drawString("EXCELLENT", 330, 300);
+			buffg.drawString("EXCELLENT", 330, 350);
 		}
 		else if(score>300) {
 			
@@ -518,7 +519,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 60));
 			buffg.setColor(Color.yellow);
-			buffg.drawString("BEST", 370, 300);
+			buffg.drawString("BEST", 370, 350);
 		}
 		else if(score>200) {
 			
@@ -526,7 +527,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 60));
 			buffg.setColor(Color.yellow);
-			buffg.drawString("GOOD", 370, 300);
+			buffg.drawString("GOOD", 370, 350);
 		}
 		else if(score>100) {
 			
@@ -534,7 +535,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 60));
 			buffg.setColor(Color.yellow);
-			buffg.drawString("SOSO", 370, 300);
+			buffg.drawString("SOSO", 370, 350);
 		}
 		else if(score>0) {
 			
@@ -542,10 +543,10 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			
 			buffg.setFont(new Font("Noteworthy", Font.BOLD, 60));
 			buffg.setColor(Color.yellow);
-			buffg.drawString("BAD", 370, 300);
+			buffg.drawString("BAD", 370, 350);
 		}
 		else
-			buffg.drawString("ERROR", 370, 300);
+			buffg.drawString("ERROR", 370, 350);
 		
 		if(db_over == 0) {
 			db_over++;
