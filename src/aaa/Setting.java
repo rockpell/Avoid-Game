@@ -1,6 +1,5 @@
 package aaa;
 
-import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -56,6 +55,7 @@ class GameSetting implements ItemListener {
 		sfs.setSize(ac, he); // 프레임 크기 지정
 
 		sfs.addWindowListener(new WindowAdapter() {
+			@SuppressWarnings("unused")
 			public void WindowClosing(WindowEvent e) {
 
 				sfs.setVisible(false);

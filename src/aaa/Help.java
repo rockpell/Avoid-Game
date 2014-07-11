@@ -23,6 +23,7 @@ class GameHelp {
 	h.setSize(x, y); // 프레임 크기 지정
 	
 	h.addWindowListener(new WindowAdapter() {
+		@SuppressWarnings("unused")
 		public void WindowClosing(WindowEvent e) {
 			h.setVisible(false);
 			h.dispose();

@@ -10,8 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.FileInputStream;
+
 
 //import sun.audio.AudioPlayer;
 //import sun.audio.AudioStream;
@@ -185,8 +184,17 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 			TrueDraw2();// 실제로 그려진 그림을 가져온다
 		}
 		else if (keyP == 1) {
+			if (c % (lasert*3) == 0 && lasBB < 10) {
+				lasBB += 2;
+			} // 레이져 숫자 증가
+			
+			if(c% (lasert*5) == 0 && bombs <4){ // 폭탄 숫자 증가
+				bombs ++;
+				if(bombs>3) blimit++;
+			}
 			TrueDraw();
 			score = c;
+			
 		}
 		else if (keyP == 2) {
 			TrueDraw3();
@@ -201,12 +209,14 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		if(gameSetting == true) {
 			gameSetting = false;
 			System.out.println("설정");
+			@SuppressWarnings("unused")
 			GameSetting GS = new GameSetting();
 		}
 		
 		if(gameHelp == true) {
 			gameHelp = false;
 			System.out.println("도움");
+			@SuppressWarnings("unused")
 			GameHelp GH = new GameHelp();
 		}
 
@@ -410,14 +420,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		buffg.drawString("shieldItem : "+shieldItem, a-200, 40);
 		buffg.drawString("wave : "+waveCheck, a-300, 40);
 
-		if (c % (lasert*3) == 0 && lasBB < 10) {
-			lasBB += 2;
-		} // 레이져 숫자 증가
 		
-		if(c% (lasert*5) == 0 && bombs <4){ // 폭탄 숫자 증가
-			bombs ++;
-			if(bombs>3) blimit++;
-		}
 		
 		if (c % lasert == 0) {
 			LaserProcess(lasBB); // 레이저 예측지점 생성
@@ -468,7 +471,7 @@ class Body extends JFrame implements KeyListener, Runnable, MouseListener {
 		exit = Toolkit.getDefaultToolkit().getImage("img/exit.png");
 		buffg.drawImage(exit, 380, 250, this);
 		
-		buffg.drawString("Avoid 1.0", 15, 500);
+		buffg.drawString("Avoid 2.0", 15, 500);
 	}
     
 
